@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${novel.getName()}">Đọc truyện</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!--css-->
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/css/novel.css}" rel="stylesheet"/>
+<!--    <link href="/css/bootstrap.css" rel="stylesheet"/>-->
+<!--    <link th:href="/css/novel.css" rel="stylesheet"/>-->
+
+    <!--js-->
+    <script th:src="@{/js/bootstrap.js}"></script>
+<!--    <script src="@{/js/bootstrap.js}"></script>-->
+
+    <style>
+      pre {
+        white-space: pre-wrap;
+      }
+    </style>
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+
+<h1 th:text="${novel.getName()}"></h1><br/>
+<div sec:authorize="isAuthenticated()">
+    <div th:if="${favorited}" style="color:red;margin:10px 0px;" ><a class="btn btn-favorite" th:href="@{/novel/__${novel.getId()}__/favorite}">Bỏ yêu thích truyện</a></div>
+    <div th:unless="${favorited}" style="color:blue;margin:10px 0px;"><a class="btn btn-unfavorite" th:href="@{/novel/__${novel.getId()}__/favorite}">Yêu thích truyện</a></div>
+</div>
+<div>
+    <label>Tác Giả: </label><b th:text="${novel.getAuthor().getName()}"></b><br/>
+    <label>Thể Loại: </label>
+    <p th:each="genre : ${novel.getGenres()}">
+        <a th:href="@{/genre/__*{genre.getId()}__}" th:text="*{genre.getName()}"></a>
+    </p>
+    <label>Mô Tả: </label>
+    <pre th:text="${novel.getDescription()}" ></pre><br/>
+</div>
+<h2>Danh sách chương</h2>
+<ul>
+    <li th:each="chapter : ${chapters}">
+        <a th:href="@{/c__*{chapter.getId()}__}"><span th:text="*{chapter.getNumber()}"></span> : <span
+                th:text="*{chapter.getName()}"></span></a>
+    </li>
+</ul>
+</body>
+</html>

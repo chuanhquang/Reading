@@ -1,0 +1,14 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     style="border: 1px solid #ccc;padding:5px;margin-bottom:20px;">
+
+    <div sec:authorize="isAuthenticated()">
+        <a class="btn btn-homepage" th:href="@{/index}">Trang Chủ</a>. Welcome, <a class="btn btn-user" th:href="@{/user}"><span sec:authentication="name"></span></a>. <a class="btn btn-logout" th:href="@{/logout}">Đăng xuất</a>
+    </div>
+
+    <div sec:authorize="isAnonymous()">
+        <a class="btn btn-login" th:href="@{/login}">Đăng nhập</a>
+        <a class="btn btn-register" th:href="@{/signup}">Đăng ký</a>
+    </div>
+
+
+</div>

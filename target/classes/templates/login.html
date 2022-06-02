@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--css-->
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+
+    <!--js-->
+    <script th:src="@{/js/bootstrap.js}"></script>
+
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+
+<h1>Đăng nhập</h1>
+<div th:if="${param.error}" style="color:red;margin:10px 0px;" class="error">Sai tài khoản hoặc mật khẩu</div>
+
+<form th:action="@{/j_spring_security_check}" method="post">
+    <label for="username">Username</label>:
+    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+    <label for="password">Mật khẩu</label>:
+    <input type="password" id="password" name="password" /> <br />
+
+    <p>Remember Me?<input type="checkbox" name="remember-me" /></p>
+    <br/>
+    <input type="submit" value="Log in" />
+</form>
+</body>
+</html>

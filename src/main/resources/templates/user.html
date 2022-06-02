@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin tài khoản</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!--css-->
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/css/novel.css}" rel="stylesheet"/>
+<!--    <link href="/css/bootstrap.css" rel="stylesheet"/>-->
+<!--    <link th:href="/css/novel.css" rel="stylesheet"/>-->
+
+    <!--js-->
+    <script th:src="@{/js/bootstrap.js}"></script>
+<!--    <script src="@{/js/bootstrap.js}"></script>-->
+
+    <style>
+      pre {
+        white-space: pre-wrap;
+      }
+    </style>
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+
+<h1 th:text="${user.getUsername()}"></h1><br/>
+
+<h2><a th:href="@{/change-password}">>Đổi mật khẩu</a></h2>
+
+<h2>Truyện đang theo dõi</h2>
+<ul>
+    <li th:each="novel : ${user.getFavoritedNovels()}">
+        <a th:href="@{/novel/__*{novel.getId()}__}"><span th:text="*{novel.getName()}"></span> :
+            <span th:text="*{novel.getAuthor().getName()}"></span></a>
+    </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--css-->
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+
+    <!--js-->
+    <script th:src="@{/js/bootstrap.js}"></script>
+
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+
+<h1>Đăng ký tài khoản</h1>
+<div th:if="${error}" style="color:red;margin:10px 0px;" class="error">Tên đăng nhập đã tồn tại</div>
+
+<form th:action="@{/signup}" th:object="${user}" method="post">
+    <label for="username">Username</label>:
+    <input type="text" id="username" name="username" autofocus="autofocus" th:field="*{username}"/> <br />
+    <label for="password">Mật khẩu</label>:
+    <input type="password" id="password" name="password" th:field="*{password}"/> <br />
+<!--    <label for="password">Nhập lại mật khẩu</label>:-->
+<!--    <input type="password" id="confirm-password" name="password" th:field="*{confirm-password}"/> <br />-->
+
+    <input type="submit" value="Đăng ký" />
+</form>
+</body>
+</html>

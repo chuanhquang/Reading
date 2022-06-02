@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đọc truyện</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--css-->
+    <link th:href="@{css/bootstrap.css}" rel="stylesheet" />
+
+    <!--js-->
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <style>
+      pre {
+        white-space: pre-wrap;
+      }
+    </style>
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+
+<h1><a th:href="@{/novel/__${novel.getId()}__}"><p th:text="${novel.getName()}"></p></a></h1>
+<h2><span th:text="${chapter.getNumber()}"></span> : <span th:text="${chapter.getName()}"></span></h2>
+<p><pre th:text="*{chapter.getContent()}"></pre></p>
+<div th:unless="${adjacentChapters[0]== null}" th:with="previousChapter=${adjacentChapters[0]}"><a th:href="@{/c__${previousChapter.getId()}__}" class="btn btn-primary">Chương Trước</a></div>
+<select th:onchange="location = 'c' + this.value;">
+    <option th:each="temp : ${chapters}" th:value="*{temp.getId()}" th:text="*{temp.getNumber()}" th:selected="${temp.getId()==chapter.getId()}">
+    </option>
+</select>
+<div th:unless="${adjacentChapters[1]== null}" th:with="nextChapter=${adjacentChapters[1]}"><a th:href="@{/c__${nextChapter.getId()}__}" class="btn btn-primary">Chương Sau</a></div>
+</body>
+</html>
