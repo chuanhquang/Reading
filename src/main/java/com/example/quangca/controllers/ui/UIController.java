@@ -73,7 +73,8 @@ public class UIController {
         return "novel";
     }
 
-    @PutMapping("/novel/{novel_id}/favorite")
+    @GetMapping("/novel/{novel_id}/favorite")
+    @PreAuthorize("isAuthenticated()")
     public String addNovelFavorite(Model model, @PathVariable("novel_id") int novelId) {
         NovelDto novel = novelService.getNovel(novelId);
         List<ChapterDto> chapters = chapterService.getChapters(novelId);

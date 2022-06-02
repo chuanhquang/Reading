@@ -28,7 +28,7 @@
 
 <h2><a th:href="@{/change-password}">>Đổi mật khẩu</a></h2>
 
-<h2>Truyện đang theo dõi</h2>
+<h2>Truyện yêu thích</h2>
 <ul>
     <li th:each="novel : ${user.getFavoritedNovels()}">
         <a th:href="@{/novel/__*{novel.getId()}__}"><span th:text="*{novel.getName()}"></span> :
