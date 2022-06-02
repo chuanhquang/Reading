@@ -4,13 +4,10 @@ import com.example.quangca.dto.ChapterDto;
 import com.example.quangca.dto.GenreDto;
 import com.example.quangca.dto.NovelDto;
 import com.example.quangca.dto.UserDto;
-import com.example.quangca.models.Novel;
 import com.example.quangca.request.ChangePasswordForm;
 import com.example.quangca.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,18 +52,8 @@ public class UIController {
         List<ChapterDto> chapters = chapterService.getChapters(novelId);
         model.addAttribute("novel", novel);
         model.addAttribute("chapters", chapters);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDto currentUser = userService.findUserByUsername(((UserDetails) principal).getUsername());
-            for (Novel temp : currentUser.getFavoritedNovels()) {
-                if (temp.getId() == novel.getId()) {
-                    model.addAttribute("favorited", Boolean.TRUE);
-                    return "novel";
-                }
-            }
-
-            model.addAttribute("favorited", Boolean.FALSE);
-
+        if (userService.isFavoriteNovel(novelId)) {
+            model.addAttribute("favorited", Boolean.TRUE);
         } else {
             model.addAttribute("favorited", Boolean.FALSE);
         }
@@ -80,11 +67,7 @@ public class UIController {
         List<ChapterDto> chapters = chapterService.getChapters(novelId);
         model.addAttribute("novel", novel);
         model.addAttribute("chapters", chapters);
-        if (userService.isUserLoggedIn()) {
-            model.addAttribute("favorited", userService.favoriteUnfavoriteNovel(novelId) ? Boolean.TRUE : Boolean.FALSE);
-        } else {
-            model.addAttribute("favorited", Boolean.FALSE);
-        }
+        model.addAttribute("favorited", userService.favoriteUnfavoriteNovel(novelId) ? Boolean.TRUE : Boolean.FALSE);
         return "novel";
     }
 

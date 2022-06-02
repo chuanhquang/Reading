@@ -83,6 +83,14 @@ public class UserService {
         return novelFavoriteService.addRemoveFavoriteNovel(currentUser.getId(), novelId);
     }
 
+    public boolean isFavoriteNovel(int novelId){
+        if(!this.isUserLoggedIn()){
+            return false;
+        }
+        User currentUser = this.getCurrentLoggedInUser();
+        return novelFavoriteService.isFavoritedNovel(currentUser.getId(), novelId);
+    }
+
     private boolean usernameExist(String username){
         return userRepository.findByUsername(username) != null;
     }
